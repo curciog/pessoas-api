@@ -142,17 +142,20 @@ O projeto possui testes automatizados utilizando JUnit para validar:
 ## Demonstração
 
 ### Criando uma pessoa (POST)
-[screenshot do Postman fazendo um POST /pessoas]
+<img width="1919" height="1079" alt="Screenshot_1" src="https://github.com/user-attachments/assets/bac8f0ec-f7ce-4b7f-a6d4-1f89a6313c24" />
+
 
 ---
 
 ### Listando pessoas (GET)
-[screenshot do Postman fazendo um GET /pessoas]
+<img width="1919" height="1079" alt="getPostman" src="https://github.com/user-attachments/assets/95502678-be70-41c4-8ccd-c8a3e29130e4" />
+
 
 ---
 
 ### Testes passando no IntelliJ
-[screenshot mostrando os testes passando]
+<img width="1919" height="1079" alt="testeJUnit" src="https://github.com/user-attachments/assets/d2f7a2fc-9222-4f2a-af86-b8a9b268fb09" />
+
 
 ---
 
