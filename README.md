@@ -6,12 +6,12 @@ API REST desenvolvida com Spring Boot para gerenciamento de pessoas.
 
 ## Tecnologias utilizadas
 
-- Java
+- Java 21
 - Spring Boot
 - Spring Data JPA
 - MySQL
 - Maven
-- JUnit (testes)
+- JUnit
 
 ---
 
@@ -82,6 +82,24 @@ spring.jpa.show-sql=true
 
 4. Execute a aplicação
 
+5. Popule as tabelas auxiliares
+
+```sql
+INSERT INTO estados_civis (nome) VALUES
+('Solteiro'),
+('Casado'),
+('Divorciado'),
+('Viúvo');
+
+INSERT INTO graus_instrucao (descricao) VALUES
+('Fundamental'),
+('Médio'),
+('Graduação'),
+('Especialização'),
+('Mestrado'),
+('Doutorado');
+```
+
 ---
 
 ## Endpoints
@@ -89,7 +107,6 @@ spring.jpa.show-sql=true
 ### Criar pessoa
 POST /pessoas
 
-Exemplo de body:
 ```json
 {
   "nome": "Gabriel Oliveira",
@@ -115,6 +132,16 @@ GET /pessoas/{id}
 ### Atualizar pessoa
 PUT /pessoas/{id}
 
+```json
+{
+  "nome": "Nome Atualizado",
+  "cpf": "12345678900",
+  "rg": "7654321",
+  "estadoCivilId": 2,
+  "grauInstrucaoId": 4
+}
+```
+
 ---
 
 ### Deletar pessoa
@@ -126,6 +153,10 @@ DELETE /pessoas/{id}
 
 - CPF não pode ser duplicado
 - Retorna erro **409 (Conflict)** quando CPF já existe
+
+### Exemplo de erro
+
+<img width="1919" height="1079" alt="erroCpfDuplicado" src="https://github.com/user-attachments/assets/2964bf58-30d3-4984-ab3f-4a3ed7702592" />
 
 ---
 
