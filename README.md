@@ -4,17 +4,18 @@ API REST desenvolvida com Spring Boot para gerenciamento de pessoas.
 
 ---
 
-## 🚀 Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - Java
 - Spring Boot
 - Spring Data JPA
 - MySQL
 - Maven
+- JUnit (testes)
 
 ---
 
-## 📌 Funcionalidades
+## Funcionalidades
 
 - Criar pessoa
 - Listar pessoas
@@ -25,7 +26,7 @@ API REST desenvolvida com Spring Boot para gerenciamento de pessoas.
 
 ---
 
-## 📊 Estrutura do banco
+## Estrutura do banco
 
 ### Pessoa
 - id
@@ -45,26 +46,51 @@ API REST desenvolvida com Spring Boot para gerenciamento de pessoas.
 
 ---
 
+## Relacionamentos
+
+- Uma pessoa possui **um estado civil**
+- Uma pessoa possui **um grau de instrução**
+- Várias pessoas podem ter o mesmo estado civil
+- Várias pessoas podem ter o mesmo grau de instrução
+
+---
+
 ## ▶️ Como rodar o projeto
 
 1. Clone o repositório:
 
-    git clone https://github.com/curciog/pessoas-api.git
+```bash
+git clone https://github.com/curciog/pessoas-api.git
+```
 
-2. Abra no IntelliJ
+2. Abra o projeto no IntelliJ
 
-3. Configure o banco de dados no arquivo `application.properties`
+3. Configure o banco de dados no arquivo:
+
+`src/main/resources/application.properties`
+
+Exemplo:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/api_db
+spring.datasource.username=root
+spring.datasource.password=SUA_SENHA
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
 
 4. Execute a aplicação
 
 ---
 
-## 🔗 Endpoints
+## Endpoints
 
 ### Criar pessoa
 POST /pessoas
 
 Exemplo de body:
+```json
 {
   "nome": "Gabriel Oliveira",
   "cpf": "12345678900",
@@ -72,6 +98,7 @@ Exemplo de body:
   "estadoCivilId": 1,
   "grauInstrucaoId": 3
 }
+```
 
 ---
 
@@ -85,24 +112,51 @@ GET /pessoas/{id}
 
 ---
 
-### Atualizar
+### Atualizar pessoa
 PUT /pessoas/{id}
 
 ---
 
-### Deletar
+### Deletar pessoa
 DELETE /pessoas/{id}
 
 ---
 
-## ⚠️ Regras de negócio
+## Regras de negócio
 
 - CPF não pode ser duplicado
-- Retorna erro 409 quando CPF já existe
+- Retorna erro **409 (Conflict)** quando CPF já existe
+
+---
+
+## Testes
+
+O projeto possui testes automatizados utilizando JUnit para validar:
+
+- Criação de pessoa com sucesso
+- Bloqueio de CPF duplicado
+- Listagem de pessoas
+
+---
+
+## Demonstração
+
+### Criando uma pessoa (POST)
+[screenshot do Postman fazendo um POST /pessoas]
+
+---
+
+### Listando pessoas (GET)
+[screenshot do Postman fazendo um GET /pessoas]
+
+---
+
+### Testes passando no IntelliJ
+[screenshot mostrando os testes passando]
 
 ---
 
 ## 👨‍💻 Autor
 
-Gabriel Curcio
+Gabriel Curcio  
 https://www.linkedin.com/in/curciogabriel/
