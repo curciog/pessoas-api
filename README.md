@@ -1,6 +1,6 @@
 # API de Pessoas
 
-API REST desenvolvida com Spring Boot para gerenciamento de pessoas.
+API REST desenvolvida com Spring Boot para cadastro e gerenciamento de pessoas, com validação de CPF único e relacionamento entre entidades.
 
 ---
 
@@ -52,6 +52,10 @@ API REST desenvolvida com Spring Boot para gerenciamento de pessoas.
 - Uma pessoa possui **um grau de instrução**
 - Várias pessoas podem ter o mesmo estado civil
 - Várias pessoas podem ter o mesmo grau de instrução
+
+### Relacionamentos implementados utilizando JPA:
+- ManyToOne entre Pessoa e EstadoCivil
+- ManyToOne entre Pessoa e GrauInstrucao
 
 ---
 
@@ -105,7 +109,7 @@ INSERT INTO graus_instrucao (descricao) VALUES
 ## Endpoints
 
 ### Criar pessoa
-POST /pessoas
+**POST** /pessoas
 
 ```json
 {
@@ -120,17 +124,17 @@ POST /pessoas
 ---
 
 ### Listar pessoas
-GET /pessoas
+**GET** /pessoas
 
 ---
 
 ### Buscar por ID
-GET /pessoas/{id}
+**GET** /pessoas/{id}
 
 ---
 
 ### Atualizar pessoa
-PUT /pessoas/{id}
+**PUT** /pessoas/{id}
 
 ```json
 {
@@ -145,7 +149,7 @@ PUT /pessoas/{id}
 ---
 
 ### Deletar pessoa
-DELETE /pessoas/{id}
+**DELETE** /pessoas/{id}
 
 ---
 
@@ -167,6 +171,8 @@ O projeto possui testes automatizados utilizando JUnit para validar:
 - Criação de pessoa com sucesso
 - Bloqueio de CPF duplicado
 - Listagem de pessoas
+
+Os testes foram implementados como testes de integração, simulando requisições HTTP reais na API.
 
 ---
 
