@@ -1,5 +1,7 @@
 package com.gabriel.api.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class PessoaRequest {
 
     private String nome;
@@ -19,6 +21,7 @@ public class PessoaRequest {
         this.grauInstrucaoId = grauInstrucaoId;
     }
 
+    @NotNull(message = "O nome é obrigatório.")
     public String getNome() {
         return nome;
     }

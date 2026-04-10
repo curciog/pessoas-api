@@ -20,7 +20,7 @@ public class PessoaIntegrationTest {
     void deveCriarPessoaComSucesso() {
         PessoaRequest request = new PessoaRequest();
         request.setNome("Teste JUnit");
-        request.setCpf("12312312312");
+        request.setCpf("00000000055");
         request.setRg("1234567");
         request.setEstadoCivilId(1L);
         request.setGrauInstrucaoId(1L);

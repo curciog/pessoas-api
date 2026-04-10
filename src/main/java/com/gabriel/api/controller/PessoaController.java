@@ -3,6 +3,7 @@ package com.gabriel.api.controller;
 import com.gabriel.api.dto.PessoaRequest;
 import com.gabriel.api.entity.Pessoa;
 import com.gabriel.api.service.PessoaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class PessoaController {
     }
 
     @PostMapping
-    public Pessoa criar(@RequestBody PessoaRequest request) {
+    public Pessoa criar(@RequestBody @Valid PessoaRequest request) {
         return service.salvar(request);
     }
 
