@@ -14,7 +14,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pessoa {
+public class Pessoa { // ajuste pro code review
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PessoaService {
+public class PessoaService { // ajuste pro code review
 
     private final PessoaRepository pessoaRepository;
     private final EstadoCivilRepository estadoCivilRepository;

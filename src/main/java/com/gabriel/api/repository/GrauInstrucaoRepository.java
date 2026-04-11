@@ -3,5 +3,5 @@ package com.gabriel.api.repository;
 import com.gabriel.api.entity.GrauInstrucao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GrauInstrucaoRepository extends JpaRepository<GrauInstrucao, Long> {
+public interface GrauInstrucaoRepository extends JpaRepository<GrauInstrucao, Long> { // ajuste pro code review
 }

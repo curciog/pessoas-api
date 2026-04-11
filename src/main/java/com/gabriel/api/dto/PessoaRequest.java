@@ -2,7 +2,7 @@ package com.gabriel.api.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class PessoaRequest {
+public class PessoaRequest { // ajuste pro code review
 
     private String nome;
     private String cpf;

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pessoas")
-public class PessoaController {
+public class PessoaController { // ajuste pro code review
 
     private final PessoaService service;
 

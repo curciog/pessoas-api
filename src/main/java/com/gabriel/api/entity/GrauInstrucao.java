@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GrauInstrucao {
+public class GrauInstrucao { // ajuste pro code review
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

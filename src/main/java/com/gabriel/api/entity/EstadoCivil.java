@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EstadoCivil {
+public class EstadoCivil { // ajuste pro code review
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

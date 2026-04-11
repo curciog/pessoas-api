@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PessoaIntegrationTest {
+public class PessoaIntegrationTest { // ajuste pro code review
 
     @Autowired
     private TestRestTemplate restTemplate;
