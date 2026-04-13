@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/pessoas")
-public class PessoaController { // ajuste pro code review
+public class PessoaController {
 
     private final PessoaService service;
     private final PessoaMapper pessoaMapper;
