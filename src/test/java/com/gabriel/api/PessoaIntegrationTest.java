@@ -28,7 +28,7 @@ public class PessoaIntegrationTest { // ajuste pro code review
         ResponseEntity<String> response =
                 restTemplate.postForEntity("/pessoas", request, String.class);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertTrue(response.getBody().contains("Teste JUnit"));
     }
 
