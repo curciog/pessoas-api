@@ -18,12 +18,13 @@ public class PessoaIntegrationTest { // ajuste pro code review
 
     @Test
     void deveCriarPessoaComSucesso() {
-        PessoaRequest request = new PessoaRequest();
-        request.setNome("Teste JUnit");
-        request.setCpf("00000000055");
-        request.setRg("1234567");
-        request.setEstadoCivilId(1L);
-        request.setGrauInstrucaoId(1L);
+        PessoaRequest request = new PessoaRequest(
+                "Teste JUnit",
+                "00000000055",
+                "1234567",
+                1L,
+                1L
+        );
 
         ResponseEntity<String> response =
                 restTemplate.postForEntity("/pessoas", request, String.class);
@@ -34,12 +35,13 @@ public class PessoaIntegrationTest { // ajuste pro code review
 
     @Test
     void naoDevePermitirCpfDuplicado() {
-        PessoaRequest request = new PessoaRequest();
-        request.setNome("Pessoa Duplicada");
-        request.setCpf("88888888888");
-        request.setRg("7654321");
-        request.setEstadoCivilId(1L);
-        request.setGrauInstrucaoId(1L);
+        PessoaRequest request = new PessoaRequest(
+                "Pessoa Duplicada",
+                "88888888888",
+                "7654321",
+                1L,
+                1L
+        );
 
         restTemplate.postForEntity("/pessoas", request, String.class);
 

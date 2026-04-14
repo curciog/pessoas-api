@@ -30,20 +30,20 @@ public class PessoaService { // ajuste pro code review
     }
 
     public Pessoa salvar(PessoaRequest request) {
-        if (pessoaRepository.existsByCpf(request.getCpf())) {
+        if (pessoaRepository.existsByCpf(request.cpf())) {
             throw new CpfDuplicadoException("Já existe uma pessoa cadastrada com esse CPF.");
         }
 
-        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.getEstadoCivilId())
+        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.estadoCivilId())
                 .orElseThrow(() -> new RuntimeException("Estado civil não encontrado."));
 
-        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.getGrauInstrucaoId())
+        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.grauInstrucaoId())
                 .orElseThrow(() -> new RuntimeException("Grau de instrução não encontrado."));
 
         Pessoa pessoa = new Pessoa();
-        pessoa.setNome(request.getNome());
-        pessoa.setCpf(request.getCpf());
-        pessoa.setRg(request.getRg());
+        pessoa.setNome(request.nome());
+        pessoa.setCpf(request.cpf());
+        pessoa.setRg(request.rg());
         pessoa.setEstadoCivil(estadoCivil);
         pessoa.setGrauInstrucao(grauInstrucao);
 
@@ -63,19 +63,19 @@ public class PessoaService { // ajuste pro code review
         Pessoa pessoa = pessoaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pessoa não encontrada."));
 
-        if (!pessoa.getCpf().equals(request.getCpf()) && pessoaRepository.existsByCpf(request.getCpf())) {
+        if (!pessoa.getCpf().equals(request.cpf()) && pessoaRepository.existsByCpf(request.cpf())) {
             throw new RuntimeException("Já existe uma pessoa cadastrada com esse CPF.");
         }
 
-        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.getEstadoCivilId())
+        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.estadoCivilId())
                 .orElseThrow(() -> new RuntimeException("Estado civil não encontrado."));
 
-        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.getGrauInstrucaoId())
+        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.grauInstrucaoId())
                 .orElseThrow(() -> new RuntimeException("Grau de instrução não encontrado."));
 
-        pessoa.setNome(request.getNome());
-        pessoa.setCpf(request.getCpf());
-        pessoa.setRg(request.getRg());
+        pessoa.setNome(request.nome());
+        pessoa.setCpf(request.cpf());
+        pessoa.setRg(request.rg());
         pessoa.setEstadoCivil(estadoCivil);
         pessoa.setGrauInstrucao(grauInstrucao);
 
