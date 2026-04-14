@@ -1,6 +1,6 @@
 package com.gabriel.api.exception;
 
-public class ErroResponse { // ajuste pro code review
+public class ErroResponse {
 
     private String mensagem;
 
