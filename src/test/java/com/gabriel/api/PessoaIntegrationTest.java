@@ -1,62 +1,76 @@
 package com.gabriel.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gabriel.api.dto.PessoaRequest;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PessoaIntegrationTest { // ajuste pro code review
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+@Transactional
+public class PessoaIntegrationTest {
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
-    void deveCriarPessoaComSucesso() {
+    void deveCriarPessoaComSucesso() throws Exception {
         PessoaRequest request = new PessoaRequest(
                 "Teste JUnit",
-                "00000000055",
+                "00005555556",
                 "1234567",
                 1L,
                 1L
         );
 
-        ResponseEntity<String> response =
-                restTemplate.postForEntity("/pessoas", request, String.class);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertTrue(response.getBody().contains("Teste JUnit"));
+        mockMvc.perform(post("/pessoas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(content().string(containsString("Teste JUnit")));
     }
 
     @Test
-    void naoDevePermitirCpfDuplicado() {
+    void naoDevePermitirCpfDuplicado() throws Exception {
         PessoaRequest request = new PessoaRequest(
                 "Pessoa Duplicada",
-                "88888888888",
+                "00005555557",
                 "7654321",
                 1L,
                 1L
         );
 
-        restTemplate.postForEntity("/pessoas", request, String.class);
+        mockMvc.perform(post("/pessoas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated());
 
-        ResponseEntity<String> response =
-                restTemplate.postForEntity("/pessoas", request, String.class);
-
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertTrue(response.getBody().contains("Já existe uma pessoa cadastrada com esse CPF."));
+        mockMvc.perform(post("/pessoas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString("Já existe uma pessoa cadastrada com esse CPF.")));
     }
 
     @Test
-    void deveListarPessoas() {
-        ResponseEntity<String> response =
-                restTemplate.getForEntity("/pessoas", String.class);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+    void deveListarPessoas() throws Exception {
+        mockMvc.perform(get("/pessoas"))
+                .andExpect(status().isOk());
     }
 }
