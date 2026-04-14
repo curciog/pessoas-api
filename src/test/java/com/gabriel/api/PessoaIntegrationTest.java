@@ -1,7 +1,5 @@
 package com.gabriel.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gabriel.api.dto.PessoaRequest;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
