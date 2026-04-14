@@ -5,45 +5,36 @@ import com.gabriel.api.entity.EstadoCivil;
 import com.gabriel.api.entity.GrauInstrucao;
 import com.gabriel.api.entity.Pessoa;
 import com.gabriel.api.exception.CpfDuplicadoException;
+import com.gabriel.api.mapper.PessoaMapper;
 import com.gabriel.api.repository.EstadoCivilRepository;
 import com.gabriel.api.repository.GrauInstrucaoRepository;
 import com.gabriel.api.repository.PessoaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
     private final EstadoCivilRepository estadoCivilRepository;
     private final GrauInstrucaoRepository grauInstrucaoRepository;
-
-    public PessoaService(
-            PessoaRepository pessoaRepository,
-            EstadoCivilRepository estadoCivilRepository,
-            GrauInstrucaoRepository grauInstrucaoRepository
-    ) {
-        this.pessoaRepository = pessoaRepository;
-        this.estadoCivilRepository = estadoCivilRepository;
-        this.grauInstrucaoRepository = grauInstrucaoRepository;
-    }
+    private final PessoaMapper pessoaMapper;
 
     public Pessoa salvar(PessoaRequest request) {
-        if (pessoaRepository.existsByCpf(request.getCpf())) {
+        if (pessoaRepository.existsByCpf(request.cpf())) {
             throw new CpfDuplicadoException("Já existe uma pessoa cadastrada com esse CPF.");
         }
 
-        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.getEstadoCivilId())
+        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.estadoCivilId())
                 .orElseThrow(() -> new RuntimeException("Estado civil não encontrado."));
 
-        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.getGrauInstrucaoId())
+        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.grauInstrucaoId())
                 .orElseThrow(() -> new RuntimeException("Grau de instrução não encontrado."));
 
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome(request.getNome());
-        pessoa.setCpf(request.getCpf());
-        pessoa.setRg(request.getRg());
+        Pessoa pessoa = pessoaMapper.toEntity(request);
         pessoa.setEstadoCivil(estadoCivil);
         pessoa.setGrauInstrucao(grauInstrucao);
 
@@ -63,19 +54,17 @@ public class PessoaService {
         Pessoa pessoa = pessoaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pessoa não encontrada."));
 
-        if (!pessoa.getCpf().equals(request.getCpf()) && pessoaRepository.existsByCpf(request.getCpf())) {
+        if (!pessoa.getCpf().equals(request.cpf()) && pessoaRepository.existsByCpf(request.cpf())) {
             throw new RuntimeException("Já existe uma pessoa cadastrada com esse CPF.");
         }
 
-        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.getEstadoCivilId())
+        EstadoCivil estadoCivil = estadoCivilRepository.findById(request.estadoCivilId())
                 .orElseThrow(() -> new RuntimeException("Estado civil não encontrado."));
 
-        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.getGrauInstrucaoId())
+        GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.grauInstrucaoId())
                 .orElseThrow(() -> new RuntimeException("Grau de instrução não encontrado."));
 
-        pessoa.setNome(request.getNome());
-        pessoa.setCpf(request.getCpf());
-        pessoa.setRg(request.getRg());
+        pessoaMapper.updateEntityFromRequest(request, pessoa);
         pessoa.setEstadoCivil(estadoCivil);
         pessoa.setGrauInstrucao(grauInstrucao);
 

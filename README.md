@@ -166,7 +166,7 @@ INSERT INTO graus_instrucao (descricao) VALUES
 
 ## Testes
 
-O projeto possui testes automatizados utilizando JUnit para validar:
+O projeto possui testes integrados automatizados utilizando JUnit para validar:
 
 - Criação de pessoa com sucesso
 - Bloqueio de CPF duplicado
