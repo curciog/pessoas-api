@@ -8,26 +8,18 @@ import com.gabriel.api.exception.CpfDuplicadoException;
 import com.gabriel.api.repository.EstadoCivilRepository;
 import com.gabriel.api.repository.GrauInstrucaoRepository;
 import com.gabriel.api.repository.PessoaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PessoaService { // ajuste pro code review
+@RequiredArgsConstructor
+public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
     private final EstadoCivilRepository estadoCivilRepository;
     private final GrauInstrucaoRepository grauInstrucaoRepository;
-
-    public PessoaService(
-            PessoaRepository pessoaRepository,
-            EstadoCivilRepository estadoCivilRepository,
-            GrauInstrucaoRepository grauInstrucaoRepository
-    ) {
-        this.pessoaRepository = pessoaRepository;
-        this.estadoCivilRepository = estadoCivilRepository;
-        this.grauInstrucaoRepository = grauInstrucaoRepository;
-    }
 
     public Pessoa salvar(PessoaRequest request) {
         if (pessoaRepository.existsByCpf(request.cpf())) {
