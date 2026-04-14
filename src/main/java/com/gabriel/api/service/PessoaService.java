@@ -5,6 +5,7 @@ import com.gabriel.api.entity.EstadoCivil;
 import com.gabriel.api.entity.GrauInstrucao;
 import com.gabriel.api.entity.Pessoa;
 import com.gabriel.api.exception.CpfDuplicadoException;
+import com.gabriel.api.mapper.PessoaMapper;
 import com.gabriel.api.repository.EstadoCivilRepository;
 import com.gabriel.api.repository.GrauInstrucaoRepository;
 import com.gabriel.api.repository.PessoaRepository;
@@ -20,6 +21,7 @@ public class PessoaService {
     private final PessoaRepository pessoaRepository;
     private final EstadoCivilRepository estadoCivilRepository;
     private final GrauInstrucaoRepository grauInstrucaoRepository;
+    private final PessoaMapper pessoaMapper;
 
     public Pessoa salvar(PessoaRequest request) {
         if (pessoaRepository.existsByCpf(request.cpf())) {
@@ -32,10 +34,7 @@ public class PessoaService {
         GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.grauInstrucaoId())
                 .orElseThrow(() -> new RuntimeException("Grau de instrução não encontrado."));
 
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome(request.nome());
-        pessoa.setCpf(request.cpf());
-        pessoa.setRg(request.rg());
+        Pessoa pessoa = pessoaMapper.toEntity(request);
         pessoa.setEstadoCivil(estadoCivil);
         pessoa.setGrauInstrucao(grauInstrucao);
 
@@ -65,9 +64,7 @@ public class PessoaService {
         GrauInstrucao grauInstrucao = grauInstrucaoRepository.findById(request.grauInstrucaoId())
                 .orElseThrow(() -> new RuntimeException("Grau de instrução não encontrado."));
 
-        pessoa.setNome(request.nome());
-        pessoa.setCpf(request.cpf());
-        pessoa.setRg(request.rg());
+        pessoaMapper.updateEntityFromRequest(request, pessoa);
         pessoa.setEstadoCivil(estadoCivil);
         pessoa.setGrauInstrucao(grauInstrucao);
 
